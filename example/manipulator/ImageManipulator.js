@@ -35,6 +35,7 @@ class ExpoImageManipulator extends Component {
             cropMode: false,
             processing: false,
             zoomScale: 1,
+            enableShare: false,
         }
 
         this.scrollOffset = 0
@@ -360,38 +361,51 @@ class ExpoImageManipulator extends Component {
                                     </TouchableOpacity>
                                     <TouchableOpacity onPress={() => this.onToggleModal()}
                                         style={{
-                                            width: 200, height: 42, alignItems: 'center', justifyContent: 'center',
+                                            width: 100, height: 42, alignItems: 'center', justifyContent: 'center',
                                         }}
                                     >
                                         <Text style={{ fontWeight: '500', color: 'white', fontSize: 25 }}>{this.props.title}</Text>
                                     </TouchableOpacity>
                                     <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'flex-end' }}>
-                                        <TouchableOpacity onPress={() => this.setState({ cropMode: true })}
+                                        <TouchableOpacity onPress={() => this.setState({ cropMode: true, enableShare: true, })}
                                             style={{
                                                 marginLeft: 10, width: 42, height: 42, alignItems: 'center', justifyContent: 'center',
                                             }}
                                         >
                                             <Icon size={30} name="scissors-cutting" color="white" />
                                         </TouchableOpacity>
-                                        <View style={{ flexDirection: 'row' }}>
+                                        {
+                                            !this.state.enableShare ?
+                                                <View style={{ flexDirection: 'row' }}>
 
-                                            <TouchableOpacity onPress={() => this.props.onPreviousImage()}
-                                                style={{
-                                                    marginLeft: 10, width: 42, height: 42, alignItems: 'center', justifyContent: 'center',
-                                                }}
-                                            >
-                                                <Icon size={30} name="page-previous" color="white" />
-                                            </TouchableOpacity>
+                                                    <TouchableOpacity onPress={() => this.props.onPreviousImage()}
+                                                        style={{
+                                                            marginLeft: 10, width: 42, height: 42, alignItems: 'center', justifyContent: 'center',
+                                                        }}
+                                                    >
+                                                        <Icon size={30} name="page-previous" color="white" />
+                                                    </TouchableOpacity>
 
-                                            <TouchableOpacity onPress={() => this.props.onNextImage()}
-                                                style={{
-                                                    marginLeft: 10, width: 42, height: 42, alignItems: 'center', justifyContent: 'center',
-                                                }}
-                                            >
-                                                <Icon size={30} name="page-next" color="white" />
-                                            </TouchableOpacity>
+                                                    <TouchableOpacity onPress={() => this.props.onNextImage()}
+                                                        style={{
+                                                            marginLeft: 10, width: 42, height: 42, alignItems: 'center', justifyContent: 'center',
+                                                        }}
+                                                    >
+                                                        <Icon size={30} name="page-next" color="white" />
+                                                    </TouchableOpacity>
 
-                                        </View>
+                                                </View>
+
+                                                :
+                                                <TouchableOpacity onPress={() => { this.setState({ enableShare: false, }); onPictureChoosed({ uri, base64 }); this.onToggleModal() }}
+                                                    style={{
+                                                        marginLeft: 10, width: 60, height: 42, alignItems: 'center', justifyContent: 'center',
+                                                    }}
+                                                >
+                                                    <Text style={{ fontWeight: '500', color: 'white', fontSize: 18 }}>{"Share"}</Text>
+                                                </TouchableOpacity>
+
+                                        }
 
                                         {
                                             allowRotate
@@ -437,6 +451,8 @@ class ExpoImageManipulator extends Component {
                                                 </View>
                                             )
                                         }
+
+
                                     </View>
                                 </View>
                             )
