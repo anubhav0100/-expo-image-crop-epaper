@@ -1,7 +1,7 @@
 {
-  "name": "expo-image-crop-new-pb",
-  "version": "1.0.5",
-  "description": "Crop, rotate and flip images without detach your expo project!",
+  "name": "expo-image-crop-epaper",
+  "version": "1.0.7",
+  "description": "Crop, next and previous images without detach your expo project!",
   "main": "index.js",
   "dependencies": {
     "babel-eslint": "^10.0.1",
